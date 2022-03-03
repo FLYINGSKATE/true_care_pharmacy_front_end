@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "621397768250",
+    "project_id": "truecarepharmacy-414f4",
+    "storage_bucket": "truecarepharmacy-414f4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:621397768250:android:f70f93254b264f3520dd03",
+        "android_client_info": {
+          "package_name": "com.funkaara.true_care_pharmacy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "621397768250-m20uvbog32jgq5bdnp7j1kr5jjvj70ui.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBapxgNn5GLI4ie6xzkB3eSOiLUNTXUEvc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "621397768250-m20uvbog32jgq5bdnp7j1kr5jjvj70ui.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
