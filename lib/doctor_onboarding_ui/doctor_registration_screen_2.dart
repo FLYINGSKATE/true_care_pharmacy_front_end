@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:true_care_pharmacy/helper/globals.dart';
-import 'package:true_care_pharmacy/widgets/CustomTextFile.dart';
 
 import '../widgets/CustomMultiSelectDropDown.dart';
 
-class DoctorRegistrationScreenOne extends StatefulWidget {
+class DoctorRegistrationScreenTwo extends StatefulWidget {
   @override
-  _DoctorRegistrationScreenOneState createState() => _DoctorRegistrationScreenOneState();
+  _DoctorRegistrationScreenTwoState createState() => _DoctorRegistrationScreenTwoState();
 }
 
-class _DoctorRegistrationScreenOneState extends State<DoctorRegistrationScreenOne> {
+class _DoctorRegistrationScreenTwoState extends State<DoctorRegistrationScreenTwo> {
   TextEditingController drNameTextEditingController = TextEditingController();
   TextEditingController specialityTextEditingController = TextEditingController();
   TextEditingController phoneNumberTextEditingController = TextEditingController();
@@ -30,16 +29,16 @@ class _DoctorRegistrationScreenOneState extends State<DoctorRegistrationScreenOn
             children: [
               TitleTextCustom("Welcome","Doctor"),
               SizedBox(height: 20,),
-              WidgetHelper().CustomTextField("Your Name","Dr. ",null,"Your Good Name",specialityTextEditingController),
+              CustomTextField("Your Name","Dr. ",null,"Your Good Name",specialityTextEditingController),
               SizedBox(height: 10,),
               Padding(padding:EdgeInsets.all(8) ,child: Text("Your Speciality",style: GoogleFonts.roboto(
                 textStyle: TextStyle(color: customTextColor, letterSpacing: .5,fontSize: 18,fontWeight: FontWeight.w600),
               )),),
               CustomMultiselectDropDown(listOFStrings: ["Psychologist","Sexologist","Gynocologist"],selectedList: (listOfStrings){},),
               SizedBox(height: 10,),
-              WidgetHelper().CustomTextField("Mobile Number","+91 | ",null,"Your Mobile Number",phoneNumberTextEditingController),
+              CustomTextField("Mobile Number","+91 | ",null,"Your Mobile Number",phoneNumberTextEditingController),
               SizedBox(height: 10,),
-              WidgetHelper().CustomTextField("Email Address",null,null,"somemail@email.com",emailAddressTextEditingController),
+              CustomTextField("Email Address",null,null,"somemail@email.com",emailAddressTextEditingController),
               SizedBox(height: 20,),
               SizedBox(
                 width: double.infinity,
@@ -108,6 +107,66 @@ class _DoctorRegistrationScreenOneState extends State<DoctorRegistrationScreenOn
         )
       )
     ));
+  }
+
+  CustomTextField(String labelText,String? prefixText,String? errorText,String hintText,TextEditingController controller) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(padding:EdgeInsets.all(8) ,child: Text(labelText,style: GoogleFonts.roboto(
+          textStyle: TextStyle(color: customTextColor, letterSpacing: .5,fontSize: 18,fontWeight: FontWeight.w600),
+        )),),
+        Container(
+            child: Padding(
+              padding: EdgeInsets.all(10),
+              child: TextField(
+                cursorColor: customTextColor,
+                controller: controller,
+                style: GoogleFonts.roboto(
+                  textStyle: TextStyle(color: customTextColor, letterSpacing: .5,fontSize: 18,fontWeight: FontWeight.w600),
+                ),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  prefixStyle: GoogleFonts.roboto(
+                    textStyle: TextStyle(color: customTextColor, letterSpacing: .5,fontSize: 18,fontWeight: FontWeight.w600),
+                  ),
+                  errorText: errorText,
+                  prefixIcon: prefixText!=null?Padding(padding: EdgeInsets.all(10), child: Text('$prefixText',style: GoogleFonts.roboto(
+                    textStyle: TextStyle(color: customTextColor, letterSpacing: .5,fontSize: 18,fontWeight: FontWeight.w600),
+                  ),)):null,
+                  hintText: hintText,
+                  hintStyle: GoogleFonts.roboto(
+                    textStyle: TextStyle(color: Colors.grey, letterSpacing: .5,fontSize: 18,fontWeight: FontWeight.w400),
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                      left: 14.0, bottom: 6.0, top: 8.0),
+                  /*focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),*/
+                ),
+              ),
+            ),
+            height: 64,
+            decoration: BoxDecoration(
+              borderRadius : BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+              ),
+              boxShadow : [BoxShadow(
+                  color: Color.fromRGBO(0, 0, 0, 0.15),
+                  offset: Offset(0,3),
+                  blurRadius: 100
+              )],
+              color : Color.fromRGBO(255, 255, 255, 1),
+            )
+        )
+      ],
+    );
   }
 
   TitleTextCustom(String first,String last) {
