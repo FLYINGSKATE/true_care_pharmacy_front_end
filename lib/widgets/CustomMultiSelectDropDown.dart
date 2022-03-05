@@ -42,7 +42,7 @@ class _CustomMultiselectDropDownState extends State<CustomMultiselectDropDown> {
         iconColor: customTextColor,
         collapsedIconColor: customTextColor,
         title: Text(
-          listOFSelectedItem.isEmpty ? "Select" : listOFSelectedItem.toList().toString(),
+          listOFSelectedItem.isEmpty ? "Select" : listOFSelectedItem.join(', '),
           style: GoogleFonts.roboto(
             textStyle: TextStyle(
               color: customTextColor,

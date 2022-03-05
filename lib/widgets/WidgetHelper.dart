@@ -66,6 +66,23 @@ class WidgetHelper extends StatefulWidget {
       ],
     );
   }
+
+  TitleTextCustom(String first,String last) {
+    return RichText(
+      text: TextSpan(
+          text: first,
+          style:GoogleFonts.roboto(
+            textStyle: TextStyle(color: customTextColor, letterSpacing: .5,fontSize: 42),
+          ),
+          children: <TextSpan>[
+            TextSpan(text: ' ,\n$last',
+                style: GoogleFonts.roboto(
+                  textStyle: TextStyle(color: customTextColor, letterSpacing: .5,fontSize: 42,fontWeight: FontWeight.w700),
+                ))
+          ]
+      ),
+    );
+  }
 }
 
 class _WidgetHelperState extends State<WidgetHelper> {

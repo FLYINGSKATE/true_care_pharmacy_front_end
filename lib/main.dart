@@ -1,18 +1,28 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:true_care_pharmacy/doctor_onboarding_ui/doctor_registration_screen_1.dart';
+
+import 'package:true_care_pharmacy/modals/Doctor_Session.dart';
 
 
 import 'network/my_http_overrides.dart';
+DoctorSession docSession= DoctorSession();
 
 
-
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
-  runApp(const MyApp());
+  await Firebase.initializeApp();
+  ///TO hide Red Screen of Death!
+  ErrorWidget.builder = (FlutterErrorDetails details) => Container(
+    color : Colors.white,
+  );
+  ///To Override SSL Certificate when used with HTTPS Apis
+  //HttpOverrides.global = new MyHttpOverrides();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -30,7 +40,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:  DoctorRegistrationScreenOne(),
+      home: DoctorRegistrationScreenOne(),
     );
   }
 }

@@ -1,9 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:true_care_pharmacy/doctor_onboarding_ui/doctor_registration_screen_2.dart';
+import 'package:true_care_pharmacy/doctor_onboarding_ui/doctor_registration_screen_3.dart';
 import 'package:true_care_pharmacy/helper/globals.dart';
-import 'package:true_care_pharmacy/widgets/CustomTextFile.dart';
+import 'package:true_care_pharmacy/main.dart';
+import 'package:true_care_pharmacy/widgets/WidgetHelper.dart';
 
+import '../app/app_state.dart';
+import '../helper/progress_dialog.dart';
 import '../widgets/CustomMultiSelectDropDown.dart';
 
 class DoctorRegistrationScreenOne extends StatefulWidget {
@@ -11,11 +17,17 @@ class DoctorRegistrationScreenOne extends StatefulWidget {
   _DoctorRegistrationScreenOneState createState() => _DoctorRegistrationScreenOneState();
 }
 
-class _DoctorRegistrationScreenOneState extends State<DoctorRegistrationScreenOne> {
+class _DoctorRegistrationScreenOneState extends AppState<DoctorRegistrationScreenOne> {
   TextEditingController drNameTextEditingController = TextEditingController();
   TextEditingController specialityTextEditingController = TextEditingController();
   TextEditingController phoneNumberTextEditingController = TextEditingController();
   TextEditingController emailAddressTextEditingController = TextEditingController();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  String verifyID = "";
+
+  String specialityOfDoctor="";
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +40,16 @@ class _DoctorRegistrationScreenOneState extends State<DoctorRegistrationScreenOn
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TitleTextCustom("Welcome","Doctor"),
+              WidgetHelper().TitleTextCustom("Welcome","Doctor"),
               SizedBox(height: 20,),
-              WidgetHelper().CustomTextField("Your Name","Dr. ",null,"Your Good Name",specialityTextEditingController),
+              WidgetHelper().CustomTextField("Your Name","Dr. ",null,"Your Good Name",drNameTextEditingController),
               SizedBox(height: 10,),
               Padding(padding:EdgeInsets.all(8) ,child: Text("Your Speciality",style: GoogleFonts.roboto(
                 textStyle: TextStyle(color: customTextColor, letterSpacing: .5,fontSize: 18,fontWeight: FontWeight.w600),
               )),),
-              CustomMultiselectDropDown(listOFStrings: ["Psychologist","Sexologist","Gynocologist"],selectedList: (listOfStrings){},),
+              CustomMultiselectDropDown(listOFStrings: ["Psychologist","Sexologist","Gynocologist"],selectedList: (listOfStrings){
+                specialityOfDoctor = listOfStrings.join(', ');
+              },),
               SizedBox(height: 10,),
               WidgetHelper().CustomTextField("Mobile Number","+91 | ",null,"Your Mobile Number",phoneNumberTextEditingController),
               SizedBox(height: 10,),
@@ -54,7 +68,8 @@ class _DoctorRegistrationScreenOneState extends State<DoctorRegistrationScreenOn
                           primary: primaryColorOfApp
                       ),
                       onPressed: () {
-
+                        print("+91"+phoneNumberTextEditingController.text);
+                        phoneSignIn("+91"+phoneNumberTextEditingController.text);
                       },
                       child: Text('Proceed',style: GoogleFonts.roboto(
                         textStyle: TextStyle(color: Colors.white, letterSpacing: .5,fontSize: 24,fontWeight: FontWeight.w600),
@@ -80,7 +95,18 @@ class _DoctorRegistrationScreenOneState extends State<DoctorRegistrationScreenOn
                           primary: primaryColorOfApp
                       ),
                       onPressed: () {
+                        docSession.name = drNameTextEditingController.text;
+                        docSession.speciality = specialityOfDoctor;
+                        docSession.phoneNumber = phoneNumberTextEditingController.text;
+                        docSession.emailId = emailAddressTextEditingController.text;
 
+                        Navigator.of(context).pushReplacement(
+                            PageRouteBuilder(
+                              pageBuilder: (BuildContext context, Animation<double> animation,
+                                  Animation<double> secondaryAnimation) =>
+                                  RegistrationScreen3(),
+                              transitionDuration: const Duration(seconds: 0),
+                            ),);
                       },
                       child: Padding(
                         padding: EdgeInsets.all(10),
@@ -110,21 +136,79 @@ class _DoctorRegistrationScreenOneState extends State<DoctorRegistrationScreenOn
     ));
   }
 
-  TitleTextCustom(String first,String last) {
-    return RichText(
-      text: TextSpan(
-          text: first,
-          style:GoogleFonts.roboto(
-            textStyle: TextStyle(color: customTextColor, letterSpacing: .5,fontSize: 42),
-          ),
-          children: <TextSpan>[
-            TextSpan(text: ' ,\n$last',
-                style: GoogleFonts.roboto(
-                  textStyle: TextStyle(color: customTextColor, letterSpacing: .5,fontSize: 42,fontWeight: FontWeight.w700),
-                ))
-          ]
+
+  Future<void> phoneSignIn(String phoneNumber) async {
+    await _auth.verifyPhoneNumber(
+        phoneNumber: phoneNumber,
+        verificationCompleted: _onVerificationCompleted,
+        verificationFailed: _onVerificationFailed,
+        codeSent: _onCodeSent,
+        codeAutoRetrievalTimeout: _onCodeTimeout);
+  }
+
+  _onVerificationCompleted(PhoneAuthCredential authCredential) async {
+    print("verification completed ${authCredential.smsCode}");
+    User? user = FirebaseAuth.instance.currentUser;
+    setState(() {
+      print("Verification Completed");
+      //this.otpTextEditingController.text = authCredential.smsCode;
+    });
+    if (authCredential.smsCode != null) {
+      try{
+        UserCredential credential =
+        await user!.linkWithCredential(authCredential);
+      }on FirebaseAuthException catch(e){
+        if(e.code == 'provider-already-linked'){
+          await _auth.signInWithCredential(authCredential);
+        }
+      }
+      setState(() {
+        //isLoading = false;
+      });
+      Navigator.pushNamed(context,'Home');
+    }
+  }
+
+  _onVerificationFailed(FirebaseAuthException exception) {
+    if (exception.code == 'invalid-phone-number') {
+      print("The phone number entered is invalid!");
+    }
+  }
+
+  _onCodeSent(String verificationId, int? forceResendingToken) {
+    //this.verificationId = verificationId;
+    print(forceResendingToken);
+    print("code sent");
+    print(verificationId);
+    verifyID = verificationId;
+    ProgressDialog.hide();
+
+    print("Inside Code Sent Hook Event");
+    ProgressDialog.hide();
+
+    docSession.name = drNameTextEditingController.text;
+    docSession.speciality = specialityOfDoctor;
+    docSession.phoneNumber = phoneNumberTextEditingController.text;
+    docSession.emailId = emailAddressTextEditingController.text;
+
+    Navigator.of(context).pushReplacement(
+      PageRouteBuilder(
+        pageBuilder: (BuildContext context, Animation<double> animation,
+            Animation<double> secondaryAnimation) =>
+            OTPVerificationScreen(
+              userPhoneNumber: phoneNumberTextEditingController.text.toString(),
+              countryCode: "+91",
+              verificationId:verificationId,
+            ),
+        transitionDuration: const Duration(seconds: 0),
       ),
     );
   }
+
+  _onCodeTimeout(String timeout) {
+    return null;
+  }
+
+
 }
 
