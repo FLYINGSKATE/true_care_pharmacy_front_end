@@ -2,8 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:true_care_pharmacy/doctor_onboarding_ui/doctor_registration_screen_2.dart';
-import 'package:true_care_pharmacy/doctor_onboarding_ui/doctor_registration_screen_3.dart';
+
 import 'package:true_care_pharmacy/helper/globals.dart';
 import 'package:true_care_pharmacy/main.dart';
 import 'package:true_care_pharmacy/widgets/WidgetHelper.dart';
@@ -11,6 +10,8 @@ import 'package:true_care_pharmacy/widgets/WidgetHelper.dart';
 import '../app/app_state.dart';
 import '../helper/progress_dialog.dart';
 import '../widgets/CustomMultiSelectDropDown.dart';
+import 'doctor_registration_screen_2.dart';
+import 'doctor_registration_screen_3.dart';
 
 class DoctorRegistrationScreenOne extends StatefulWidget {
   @override
@@ -40,7 +41,7 @@ class _DoctorRegistrationScreenOneState extends AppState<DoctorRegistrationScree
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              WidgetHelper().TitleTextCustom("Welcome","Doctor"),
+              WidgetHelper().TitleTextCustom("Welcome","doctor",context),
               SizedBox(height: 20,),
               WidgetHelper().CustomTextField("Your Name","Dr. ",null,"Your Good Name",drNameTextEditingController),
               SizedBox(height: 10,),

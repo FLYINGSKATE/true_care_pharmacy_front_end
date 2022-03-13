@@ -1,0 +1,34 @@
+{
+  "language": "لغة",
+  "helloWorld": "مرحبا بالعالم",
+
+  "Welcome": "أهلا بك",
+  "how_define": "كيف تعرف نفسك؟",
+  "your_name": "اسمك" ,
+  "select_gender": "حدد جنسك" ,
+  "select_provider": "حدد نوع المزود.",
+  "hospital": "مستشفى" ,
+  "doctor": "دكتور" ,
+  "we_need_details": "نحتاج إلى بعض التفاصيل" ,
+  "tell_us_about": "أخبرنا عن نفسك" ,
+  "proceed": "متابعة",
+  "your_name": "اسمك" ,
+  "your_speciality": "تخصصك",
+
+
+  "verify_yourself": "أثبت نفسك" ,
+  "using_phone_or_gmail": "استخدام رقم الهاتف أو Google" ,
+  "mobile_no": "Mobile_Number",
+  "email_id": "معرف البريد الإلكتروني" ,
+  "wait_for_sec": "انتظر ثوانٍ",
+  "continue_with_google": "متابعة مع Google",
+  "continue": "متابعة",
+  "or":"او او",
+  "last_step": ": الخطوة الأخيرة",
+  "for_reg": "للتسجيل" ,
+  "enter_otp": "أدخل OTP"
+
+
+  
+  
+}

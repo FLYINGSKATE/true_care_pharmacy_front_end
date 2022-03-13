@@ -1,0 +1,30 @@
+{
+  "language": "language",
+  "helloWorld": "Hello World",
+  "Welcome": "Welcome",
+  "how_define": "How Do You Define Yourself?",
+  "your_name": "Your Name",
+  "select_gender": "Select Your Gender",
+  "select_provider": "Select Your Type of Provider.",
+  "hospital": "Hospital",
+  "doctor": "Doctor",
+  "we_need_details":"We Need Some Details",
+  "tell_us_about": "Tell Us About Yourself",
+  "proceed": "Proceed",
+  "your_name": "Your Name",
+  "your_speciality": "Your Speciality",
+
+
+  "verify_yourself": "Verify Yourself",
+  "using_phone_or_gmail": "Using Phone Number or Google",
+  "mobile_no": "Mobile_Number",
+  "email_id": "Email Id",
+  "wait_for_sec": "Wait for Seconds",
+  "continue_with_google": "Continue With Google",
+  "continue": "Continue",
+  "or": "Or",
+  "last_step": ":Last Step",
+  "for_reg": "For Registration",
+  "enter_otp": "Enter OTP"
+
+}

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:true_care_pharmacy/doctor_onboarding_ui/doctor_registration_screen_1.dart';
+
 
 
 import '../app/AppHelper.dart';
@@ -16,6 +16,7 @@ import '../app/app_state.dart';
 import '../helper/progress_dialog.dart';
 import '../network/http_methods.dart';
 import '../widgets/WidgetHelper.dart';
+import 'doctor_registration_screen_1.dart';
 
 
 // the code below is used to create the OTP verification screen
@@ -162,7 +163,7 @@ class _OTPVerificationScreenState extends AppState<OTPVerificationScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SizedBox(height: MediaQuery.of(context).size.height*0.04,),
-            WidgetHelper().TitleTextCustom("Verify Your Phone Number","+91 "+widget.userPhoneNumber),
+            WidgetHelper().TitleTextCustom("Verify Your Phone Number","+91 "+widget.userPhoneNumber,context),
             Expanded(child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,

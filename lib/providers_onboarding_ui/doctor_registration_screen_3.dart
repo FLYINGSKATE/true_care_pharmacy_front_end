@@ -35,7 +35,7 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> implements Ap
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  WidgetHelper().TitleTextCustom("Last Step","for Registration"),
+                  WidgetHelper().TitleTextCustom("Last Step","for Registration",context),
                   SizedBox(height: 20,),
                   WidgetHelper().CustomTextField("Desired User ID","",null,"",desireedUserIdTextEditingController),
                   SizedBox(height: 10,),

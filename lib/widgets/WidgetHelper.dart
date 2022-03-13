@@ -1,6 +1,9 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../app_localizations.dart';
 import '../helper/globals.dart';
 
 class WidgetHelper extends StatefulWidget {
@@ -67,20 +70,61 @@ class WidgetHelper extends StatefulWidget {
     );
   }
 
-  TitleTextCustom(String first,String last) {
+  TitleTextCustom(String first,String last,BuildContext context) {
     return RichText(
+      textAlign: kIsWeb?TextAlign.center:TextAlign.start,
       text: TextSpan(
-          text: first,
+          text: AppLocalizations.of(context)!.translate(first),
           style:GoogleFonts.roboto(
-            textStyle: TextStyle(color: customTextColor, letterSpacing: .5,fontSize: 42),
+            textStyle: TextStyle(color: customTextColor, letterSpacing: .5,fontSize: MediaQuery.of(context).size.width*0.09),
           ),
           children: <TextSpan>[
-            TextSpan(text: ' ,\n$last',
+            TextSpan(text: ' ,\n'+ AppLocalizations.of(context)!.translate(last),
                 style: GoogleFonts.roboto(
-                  textStyle: TextStyle(color: customTextColor, letterSpacing: .5,fontSize: 42,fontWeight: FontWeight.w700),
+                  textStyle: TextStyle(color: customTextColor, letterSpacing: .5,fontSize: MediaQuery.of(context).size.width*0.09,fontWeight: FontWeight.w700),
                 ))
           ]
       ),
+    );
+  }
+
+  TitleTextAnimatedCustom(String first,String last,BuildContext context) {
+    return Column(
+
+      children: [
+        AnimatedTextKit(
+          animatedTexts: [
+            TypewriterAnimatedText(
+              AppLocalizations.of(context)!.translate(first),
+              textStyle: GoogleFonts.roboto(
+                textStyle: TextStyle(color: customTextColor, letterSpacing: .5,fontSize: MediaQuery.of(context).size.width*0.09),
+              ),
+              speed: const Duration(milliseconds: 150),
+            ),
+          ],
+
+          //totalRepeatCount: 4,
+          //pause: const Duration(milliseconds: 100),
+          //displayFullTextOnTap: true,
+          //stopPauseOnTap: true,
+        ),
+        AnimatedTextKit(
+          animatedTexts: [
+            TypewriterAnimatedText(
+              AppLocalizations.of(context)!.translate(last),
+              textStyle: GoogleFonts.roboto(
+                textStyle: TextStyle(color: customTextColor, letterSpacing: .5,fontSize: MediaQuery.of(context).size.width*0.09,fontWeight: FontWeight.w700),
+              ),
+              speed: const Duration(milliseconds: 150),
+            ),
+          ],
+
+          //totalRepeatCount: 4,
+          //pause: const Duration(milliseconds: 100),
+          //displayFullTextOnTap: true,
+          //stopPauseOnTap: true,
+        )
+      ],
     );
   }
 }
