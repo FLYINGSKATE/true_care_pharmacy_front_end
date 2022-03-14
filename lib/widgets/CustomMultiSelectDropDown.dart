@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:true_care_pharmacy/helper/globals.dart';
+import 'package:true_care_pharmacy/main.dart';
 
 class CustomMultiselectDropDown extends StatefulWidget {
   final Function(List<String>) selectedList;
@@ -23,13 +24,11 @@ class _CustomMultiselectDropDownState extends State<CustomMultiselectDropDown> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.only(top: 10.0),
-      decoration: BoxDecoration(
-        borderRadius : BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-          bottomLeft: Radius.circular(20),
-          bottomRight: Radius.circular(20),
+      padding: EdgeInsets.only(top:size.height*0.015,bottom: size.height*0.015),
+      margin: const EdgeInsets.only(top: 10.0),
+      decoration: enableAssistance?const BoxDecoration(
+        borderRadius: BorderRadius.all(
+            Radius.circular(20.0) //                 <--- border radius here
         ),
         boxShadow : [BoxShadow(
             color: Color.fromRGBO(0, 0, 0, 0.15),
@@ -37,6 +36,13 @@ class _CustomMultiselectDropDownState extends State<CustomMultiselectDropDown> {
             blurRadius: 100
         )],
         color : Color.fromRGBO(255, 255, 255, 1),
+      ):BoxDecoration(
+        border: Border.all(
+            width: 3.0,color: customTextColor
+        ),
+        borderRadius: BorderRadius.all(
+            Radius.circular(20.0) //                 <--- border radius here
+        ),
       ),
       child: ExpansionTile(
         iconColor: customTextColor,
@@ -52,8 +58,8 @@ class _CustomMultiselectDropDownState extends State<CustomMultiselectDropDown> {
           ),
         ),
         children: <Widget>[
-          new ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
+          ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: widget.listOFStrings.length,
             itemBuilder: (BuildContext context, int index) {
@@ -95,7 +101,7 @@ class _ViewItem extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     return Padding(
       padding:
-      EdgeInsets.only(left: size.width * .032, right: size.width * .098),
+      EdgeInsets.only(left: size.width * .032),
       child: Row(
         children: [
           SizedBox(

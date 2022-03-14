@@ -1,24 +1,27 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 
 import 'package:true_care_pharmacy/helper/globals.dart';
 import 'package:true_care_pharmacy/main.dart';
 import 'package:true_care_pharmacy/widgets/WidgetHelper.dart';
 
 import '../app/app_state.dart';
+import '../app_localizations.dart';
 import '../helper/progress_dialog.dart';
 import '../widgets/CustomMultiSelectDropDown.dart';
-import 'doctor_registration_screen_2.dart';
-import 'doctor_registration_screen_3.dart';
+import 'onboarding_otp_screen.dart';
+import 'onboarding_last_step_screen.dart';
 
-class DoctorRegistrationScreenOne extends StatefulWidget {
+class OnboardingVerificationDetailsScreen extends StatefulWidget {
   @override
-  _DoctorRegistrationScreenOneState createState() => _DoctorRegistrationScreenOneState();
+  _OnboardingVerificationDetailsScreenState createState() => _OnboardingVerificationDetailsScreenState();
 }
 
-class _DoctorRegistrationScreenOneState extends AppState<DoctorRegistrationScreenOne> {
+class _OnboardingVerificationDetailsScreenState extends AppState<OnboardingVerificationDetailsScreen> {
   TextEditingController drNameTextEditingController = TextEditingController();
   TextEditingController specialityTextEditingController = TextEditingController();
   TextEditingController phoneNumberTextEditingController = TextEditingController();
@@ -30,6 +33,12 @@ class _DoctorRegistrationScreenOneState extends AppState<DoctorRegistrationScree
 
   String specialityOfDoctor="";
 
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -39,25 +48,29 @@ class _DoctorRegistrationScreenOneState extends AppState<DoctorRegistrationScree
         padding: EdgeInsets.all(20),
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: kIsWeb?CrossAxisAlignment.center:CrossAxisAlignment.start,
             children: [
-              WidgetHelper().TitleTextCustom("Welcome","doctor",context),
-              SizedBox(height: 20,),
-              WidgetHelper().CustomTextField("Your Name","Dr. ",null,"Your Good Name",drNameTextEditingController),
+              WidgetHelper().TitleTextCustom("verify_yourself","using_phone_or_gmail",context),
+              //SizedBox(height: size.height*0.52,),
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height*0.2,
+                child: Lottie.network('https://assets10.lottiefiles.com/packages/lf20_6e0qqtpa.json',)
+              ),
+              Container(
+                width:kIsWeb?size.width*0.2:size.width*0.9,
+                child: WidgetHelper().CustomTextField("mobile_no"," +91 | ",null,"mobile_no",phoneNumberTextEditingController,context),
+              ),
+              SizedBox(height: size.height*0.019,),
+              Container(
+                width:kIsWeb?size.width*0.2:size.width*0.9,
+                child: WidgetHelper().CustomTextField("email_id"," ",null,"email_id",emailAddressTextEditingController,context),
+              ),
               SizedBox(height: 10,),
-              Padding(padding:EdgeInsets.all(8) ,child: Text("Your Speciality",style: GoogleFonts.roboto(
-                textStyle: TextStyle(color: customTextColor, letterSpacing: .5,fontSize: 18,fontWeight: FontWeight.w600),
-              )),),
-              CustomMultiselectDropDown(listOFStrings: ["Psychologist","Sexologist","Gynocologist"],selectedList: (listOfStrings){
-                specialityOfDoctor = listOfStrings.join(', ');
-              },),
-              SizedBox(height: 10,),
-              WidgetHelper().CustomTextField("Mobile Number","+91 | ",null,"Your Mobile Number",phoneNumberTextEditingController),
-              SizedBox(height: 10,),
-              WidgetHelper().CustomTextField("Email Address",null,null,"somemail@email.com",emailAddressTextEditingController),
+
               SizedBox(height: 20,),
               SizedBox(
-                width: double.infinity,
+                width: kIsWeb?size.width*0.2:size.width*0.9,
                 height: size.height*0.08,
                 child: Material(
                   borderRadius: BorderRadius.circular(20),
@@ -84,7 +97,7 @@ class _DoctorRegistrationScreenOneState extends AppState<DoctorRegistrationScree
               ),),
               SizedBox(height: 10,),
               SizedBox(
-                width: double.infinity,
+                width: kIsWeb?size.width*0.2:size.width*0.9,
                 height: size.height*0.08,
                 child: Material(
                   borderRadius: BorderRadius.circular(20),
@@ -96,16 +109,16 @@ class _DoctorRegistrationScreenOneState extends AppState<DoctorRegistrationScree
                           primary: primaryColorOfApp
                       ),
                       onPressed: () {
-                        docSession.name = drNameTextEditingController.text;
-                        docSession.speciality = specialityOfDoctor;
-                        docSession.phoneNumber = phoneNumberTextEditingController.text;
-                        docSession.emailId = emailAddressTextEditingController.text;
+                        userProviderSession.name = drNameTextEditingController.text;
+                        userProviderSession.speciality = specialityOfDoctor;
+                        userProviderSession.phoneNumber = phoneNumberTextEditingController.text;
+                        userProviderSession.emailId = emailAddressTextEditingController.text;
 
                         Navigator.of(context).pushReplacement(
                             PageRouteBuilder(
                               pageBuilder: (BuildContext context, Animation<double> animation,
                                   Animation<double> secondaryAnimation) =>
-                                  RegistrationScreen3(),
+                                  OnBoardingLastStepScreen(),
                               transitionDuration: const Duration(seconds: 0),
                             ),);
                       },
@@ -187,10 +200,10 @@ class _DoctorRegistrationScreenOneState extends AppState<DoctorRegistrationScree
     print("Inside Code Sent Hook Event");
     ProgressDialog.hide();
 
-    docSession.name = drNameTextEditingController.text;
-    docSession.speciality = specialityOfDoctor;
-    docSession.phoneNumber = phoneNumberTextEditingController.text;
-    docSession.emailId = emailAddressTextEditingController.text;
+    userProviderSession.name = drNameTextEditingController.text;
+    userProviderSession.speciality = specialityOfDoctor;
+    userProviderSession.phoneNumber = phoneNumberTextEditingController.text;
+    userProviderSession.emailId = emailAddressTextEditingController.text;
 
     Navigator.of(context).pushReplacement(
       PageRouteBuilder(

@@ -6,9 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:true_care_pharmacy/MyApp.dart';
 
 
-import 'package:true_care_pharmacy/modals/Doctor_Session.dart';
-import 'package:true_care_pharmacy/providers_onboarding_ui/doctor_registration_screen_1.dart';
-import 'package:true_care_pharmacy/providers_onboarding_ui/type_selector_screen.dart';
+import 'package:true_care_pharmacy/modals/user_provider_session.dart';
+import 'package:true_care_pharmacy/providers_onboarding_ui/onboarding_verification_details.dart';
+import 'package:true_care_pharmacy/providers_onboarding_ui/onboarding_type_selector_screen.dart';
 
 
 import 'network/my_http_overrides.dart';
@@ -18,7 +18,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'app_localizations.dart';
 
-DoctorSession docSession= DoctorSession();
+UserProviderSession userProviderSession= UserProviderSession();
+bool enableAssistance = false;
+bool existingUserLogin = false;
 
 class MyApp extends StatelessWidget {
   @override

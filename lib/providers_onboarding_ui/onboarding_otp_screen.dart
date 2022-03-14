@@ -16,7 +16,7 @@ import '../app/app_state.dart';
 import '../helper/progress_dialog.dart';
 import '../network/http_methods.dart';
 import '../widgets/WidgetHelper.dart';
-import 'doctor_registration_screen_1.dart';
+import 'onboarding_verification_details.dart';
 
 
 // the code below is used to create the OTP verification screen
@@ -138,7 +138,7 @@ class _OTPVerificationScreenState extends AppState<OTPVerificationScreen> {
         Navigator.of(context).pushReplacement(PageRouteBuilder(
           pageBuilder: (BuildContext context, Animation<double> animation,
               Animation<double> secondaryAnimation) =>
-              DoctorRegistrationScreenOne(),
+              OnboardingVerificationDetailsScreen(),
           transitionDuration: const Duration(seconds: 0),
         ));
       });
